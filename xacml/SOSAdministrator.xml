@@ -1,0 +1,33 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"  PolicyId="SOSAdministrator" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable" Version="1.0">
+   <Target>
+      <AnyOf>
+         <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">sos</AttributeValue>
+               <AttributeDesignator AttributeId="urn:ogc:def:ows:sunshine:service" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+            </Match>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">administrator</AttributeValue>
+               <AttributeDesignator AttributeId="http://sunshine.eu/tipologiaUtentePilot" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+            </Match>
+         </AllOf>
+      </AnyOf>
+   </Target>
+   <Rule Effect="Permit" RuleId="Rule-1">
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+            <AttributeDesignator AttributeId="urn:ogc:def:ows:sunshine:operation" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">insertobservation</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">describesensor</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">getdataavailability</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">getfeatureofinterest</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">getobservation</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">getobservationbyid</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">getresult</AttributeValue>
+            </Apply>
+         </Apply>
+      </Condition>
+   </Rule>
+   <Rule Effect="Deny" RuleId="Deny-Rule"></Rule>
+</Policy>        

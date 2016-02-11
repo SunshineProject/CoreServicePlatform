@@ -1,0 +1,30 @@
+<Policy xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"  PolicyId="groupingAdministrator" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable" Version="1.0">
+   <Target>
+      <AnyOf>
+         <AllOf>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">grouping</AttributeValue>
+               <AttributeDesignator AttributeId="urn:ogc:def:ows:sunshine:service" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+            </Match>
+            <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">administrator</AttributeValue>
+               <AttributeDesignator AttributeId="http://sunshine.eu/tipologiaUtentePilot" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+            </Match>
+         </AllOf>
+      </AnyOf>
+   </Target>
+   <Rule Effect="Permit" RuleId="permit-Rule">
+      <Condition>
+         <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-at-least-one-member-of">
+            <AttributeDesignator AttributeId="urn:ogc:def:ows:sunshine:rest" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+            <Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:string-bag">
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">get</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">delete</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">post</AttributeValue>
+               <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">put</AttributeValue>
+            </Apply>
+         </Apply>
+      </Condition>
+   </Rule>
+   <Rule Effect="Deny" RuleId="Deny-Rule"></Rule>
+</Policy>        
